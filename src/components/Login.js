@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../providers/AuthProvider';
 import Notifications from './Notifications';
 
-const Signup = () => {
+const Login = () => {
   // hooks
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -12,26 +12,20 @@ const Signup = () => {
   // Refs
   const emailRef = useRef();
   const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
 
-  // using signup from auth context
-  const { signup } = useAuth();
+  // using login from auth context
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if password and confirm password dont match return an error
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError('Passwords do not match !');
-    }
-
     try {
       setError('');
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      navigate('/login');
+      await login(emailRef.current.value, passwordRef.current.value);
+      navigate('/');
     } catch {
-      setError('Failed to create an account !');
+      setError('Failed to sign in, wrong username or password !');
     }
 
     setLoading(false);
@@ -40,7 +34,7 @@ const Signup = () => {
   return (
     <div>
       <div>
-        <h1>Sign Up</h1>
+        <h1>Login</h1>
         {/* when error, display error notification */}
         {error && <Notifications message={error} type="error" />}
 
@@ -53,21 +47,19 @@ const Signup = () => {
             <label>Password</label>
             <input type="password" ref={passwordRef} required />
           </span>
-          <span>
-            <label>Confirm Password</label>
-            <input type="password" ref={passwordConfirmRef} required />
-          </span>
           {/* button is disabled when loading */}
           <button type="submit" disabled={loading}>
-            Sign Up
+            Login
           </button>
         </form>
+
+        <Link to="/forgot-password">Forgot Password ?</Link>
       </div>
       <div>
-        Already Have an Account? <Link to="/login">Login</Link>
+        Dont Have an Account? <Link to="/signup">Sign Up</Link>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Login;
