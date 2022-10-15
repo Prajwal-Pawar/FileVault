@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../providers/AuthProvider';
-import Notifications from './Notifications';
+import { useAuth } from '../../providers/AuthProvider';
+import Notifications from '../Notifications';
 
 const UpdateProfile = () => {
   // hooks
@@ -41,7 +41,7 @@ const UpdateProfile = () => {
 
     Promise.all(promises)
       .then(() => {
-        navigate('/');
+        navigate('/user');
       })
       .catch(() => {
         setError('Failed to update profile !');

@@ -1,18 +1,20 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../providers/AuthProvider';
-import Notifications from './Notifications';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../providers/AuthProvider';
+import Notifications from '../Notifications';
 
-const ForgotPassword = () => {
+const Login = () => {
   // hooks
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   // Refs
   const emailRef = useRef();
+  const passwordRef = useRef();
 
-  // using resetPassword from auth context
-  const { resetPassword } = useAuth();
+  // using login from auth context
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,13 +22,10 @@ const ForgotPassword = () => {
     try {
       setError('');
       setLoading(true);
-      await resetPassword(emailRef.current.value);
-      <Notifications
-        message="check your inbox for resetting password !"
-        type="success"
-      />;
+      await login(emailRef.current.value, passwordRef.current.value);
+      navigate('/');
     } catch {
-      setError('Failed to reset password !');
+      setError('Failed to sign in, wrong username or password !');
     }
 
     setLoading(false);
@@ -35,7 +34,7 @@ const ForgotPassword = () => {
   return (
     <div>
       <div>
-        <h1>Reset Password</h1>
+        <h1>Login</h1>
         {/* when error, display error notification */}
         {error && <Notifications message={error} type="error" />}
 
@@ -44,15 +43,23 @@ const ForgotPassword = () => {
             <label>Email</label>
             <input type="email" ref={emailRef} required />
           </span>
+          <span>
+            <label>Password</label>
+            <input type="password" ref={passwordRef} required />
+          </span>
           {/* button is disabled when loading */}
           <button type="submit" disabled={loading}>
-            Reset Password
+            Login
           </button>
         </form>
-        <Link to="/login">Go Back to Login</Link>
+
+        <Link to="/forgot-password">Forgot Password ?</Link>
+      </div>
+      <div>
+        Dont Have an Account? <Link to="/signup">Sign Up</Link>
       </div>
     </div>
   );
 };
 
-export default ForgotPassword;
+export default Login;

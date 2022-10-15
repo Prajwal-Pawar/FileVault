@@ -1,20 +1,18 @@
 import React, { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../providers/AuthProvider';
-import Notifications from './Notifications';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../providers/AuthProvider';
+import Notifications from '../Notifications';
 
-const Login = () => {
+const ForgotPassword = () => {
   // hooks
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   // Refs
   const emailRef = useRef();
-  const passwordRef = useRef();
 
-  // using login from auth context
-  const { login } = useAuth();
+  // using resetPassword from auth context
+  const { resetPassword } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +20,13 @@ const Login = () => {
     try {
       setError('');
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      navigate('/');
+      await resetPassword(emailRef.current.value);
+      <Notifications
+        message="check your inbox for resetting password !"
+        type="success"
+      />;
     } catch {
-      setError('Failed to sign in, wrong username or password !');
+      setError('Failed to reset password !');
     }
 
     setLoading(false);
@@ -34,7 +35,7 @@ const Login = () => {
   return (
     <div>
       <div>
-        <h1>Login</h1>
+        <h1>Reset Password</h1>
         {/* when error, display error notification */}
         {error && <Notifications message={error} type="error" />}
 
@@ -43,23 +44,15 @@ const Login = () => {
             <label>Email</label>
             <input type="email" ref={emailRef} required />
           </span>
-          <span>
-            <label>Password</label>
-            <input type="password" ref={passwordRef} required />
-          </span>
           {/* button is disabled when loading */}
           <button type="submit" disabled={loading}>
-            Login
+            Reset Password
           </button>
         </form>
-
-        <Link to="/forgot-password">Forgot Password ?</Link>
-      </div>
-      <div>
-        Dont Have an Account? <Link to="/signup">Sign Up</Link>
+        <Link to="/login">Go Back to Login</Link>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;
