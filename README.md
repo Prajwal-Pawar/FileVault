@@ -13,3 +13,7 @@
 
 - libs
   1. react-hot-toast: for notifications
+
+---
+
+> firebase config keys are in .env.local file

@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [error, setError] = useState();
   const navigate = useNavigate();
 
-  // get currentUser from useAuth
+  // get currentUser and logout from useAuth
   const { currentUser, logout } = useAuth();
 
   const handleLogout = async () => {

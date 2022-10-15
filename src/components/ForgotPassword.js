@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   // Refs
   const emailRef = useRef();
 
-  // using login from auth context
+  // using resetPassword from auth context
   const { resetPassword } = useAuth();
 
   const handleSubmit = async (e) => {
