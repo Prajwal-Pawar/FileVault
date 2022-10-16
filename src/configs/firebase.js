@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 // keys from the .env.local file
 const firebaseConfig = {
@@ -12,6 +13,17 @@ const firebaseConfig = {
 };
 
 const app = firebase.initializeApp(firebaseConfig);
+
+// to be secure
+const firestore = app.firestore();
+export const database = {
+  folders: firestore.collection('folders'),
+  files: firestore.collection('files'),
+  getCurrentTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  formatDoc: (doc) => {
+    return { id: doc.id, ...doc.data() };
+  },
+};
 
 export const auth = app.auth();
 export default app;

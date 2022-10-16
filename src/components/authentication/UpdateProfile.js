@@ -8,6 +8,7 @@ import {
   Container,
   Grid,
   Message,
+  Icon,
   Divider,
 } from 'semantic-ui-react';
 
@@ -96,8 +97,11 @@ const UpdateProfile = () => {
                 />
               </Form.Field>
               {/* button is disabled when loading */}
-              <Button type="submit" disabled={loading}>
-                Update Profile
+              <Button primary type="submit" disabled={loading} animated="fade">
+                <Button.Content visible>Update Profile</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="arrow right" />
+                </Button.Content>
               </Button>
             </Form>
             <Divider inverted />

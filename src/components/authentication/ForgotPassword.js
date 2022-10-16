@@ -8,6 +8,7 @@ import {
   Container,
   Grid,
   Message,
+  Icon,
   Divider,
 } from 'semantic-ui-react';
 
@@ -57,8 +58,11 @@ const ForgotPassword = () => {
                 <input type="email" ref={emailRef} required />
               </Form.Field>
               {/* button is disabled when loading */}
-              <Button type="submit" disabled={loading}>
-                Reset Password
+              <Button primary type="submit" disabled={loading} animated>
+                <Button.Content visible>Reset Password</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="arrow right" />
+                </Button.Content>
               </Button>
             </Form>
 

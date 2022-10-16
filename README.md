@@ -6,13 +6,12 @@
 
 - Technologies :
   1. React
-  2. Redux
-  3. Firebase (Database)
+  2. Firebase (Database)
 
 ---
 
 - libs
-  1. semantic-ui-react : for UI
+  1. semantic-ui-react : for UI <br><https://react.semantic-ui.com/>
 
 ---
 

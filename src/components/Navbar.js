@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 // semantic ui imports
-import { Menu, MenuMenu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 
 const Navbar = () => {
   return (

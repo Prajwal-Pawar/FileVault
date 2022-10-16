@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   Grid,
+  Icon,
   Message,
   Divider,
 } from 'semantic-ui-react';
@@ -67,8 +68,11 @@ const Signup = () => {
                 <input type="password" ref={passwordConfirmRef} required />
               </Form.Field>
               {/* button is disabled when loading */}
-              <Button type="submit" disabled={loading}>
-                Sign Up
+              <Button primary type="submit" disabled={loading} animated>
+                <Button.Content visible>Sign Up</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="arrow right" />
+                </Button.Content>
               </Button>
             </Form>
 
