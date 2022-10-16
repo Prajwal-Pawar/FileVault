@@ -1,7 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
-import Notifications from '../Notifications';
+// semantic ui imports
+import {
+  Form,
+  Button,
+  Container,
+  Grid,
+  Message,
+  Divider,
+} from 'semantic-ui-react';
 
 const Signup = () => {
   // hooks
@@ -38,35 +46,42 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Sign Up</h1>
-        {/* when error, display error notification */}
-        {error && <Notifications message={error} type="error" />}
+    <Container>
+      <Grid>
+        <Grid.Row centered>
+          <Grid.Column width={6}>
+            <h1>Sign Up</h1>
+            {/* when error, display error notification */}
+            {error && <Message error header="Sign Up Error" content={error} />}
+            <Form onSubmit={handleSubmit}>
+              <Form.Field>
+                <label>Email</label>
+                <input type="email" ref={emailRef} required />
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input type="password" ref={passwordRef} required />
+              </Form.Field>
+              <Form.Field>
+                <label>Confirm Password</label>
+                <input type="password" ref={passwordConfirmRef} required />
+              </Form.Field>
+              {/* button is disabled when loading */}
+              <Button type="submit" disabled={loading}>
+                Sign Up
+              </Button>
+            </Form>
 
-        <form onSubmit={handleSubmit}>
-          <span>
-            <label>Email</label>
-            <input type="email" ref={emailRef} required />
-          </span>
-          <span>
-            <label>Password</label>
-            <input type="password" ref={passwordRef} required />
-          </span>
-          <span>
-            <label>Confirm Password</label>
-            <input type="password" ref={passwordConfirmRef} required />
-          </span>
-          {/* button is disabled when loading */}
-          <button type="submit" disabled={loading}>
-            Sign Up
-          </button>
-        </form>
-      </div>
-      <div>
-        Already Have an Account? <Link to="/login">Login</Link>
-      </div>
-    </div>
+            {/* <Divider inverted /> */}
+            <Divider horizontal> OR </Divider>
+
+            <div>
+              Already Have an Account? <Link to="/login">Login</Link>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Container>
   );
 };
 

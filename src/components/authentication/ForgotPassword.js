@@ -1,12 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
-import Notifications from '../Notifications';
+// semantic ui imports
+import {
+  Form,
+  Button,
+  Container,
+  Grid,
+  Message,
+  Divider,
+} from 'semantic-ui-react';
 
 const ForgotPassword = () => {
   // hooks
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   // Refs
   const emailRef = useRef();
@@ -21,10 +30,7 @@ const ForgotPassword = () => {
       setError('');
       setLoading(true);
       await resetPassword(emailRef.current.value);
-      <Notifications
-        message="check your inbox for resetting password !"
-        type="success"
-      />;
+      setSuccess('Email is sent to your email !');
     } catch {
       setError('Failed to reset password !');
     }
@@ -33,25 +39,36 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Reset Password</h1>
-        {/* when error, display error notification */}
-        {error && <Notifications message={error} type="error" />}
+    <Container>
+      <Grid>
+        <Grid.Row centered>
+          <Grid.Column width={6}>
+            <h1>Reset Password</h1>
+            {/* when error, display error notification */}
+            {error && <Message error header="Error" content={error} />}
+            {/* when success, display success notification */}
+            {success && (
+              <Message success header="Email Sent" content={success} />
+            )}
 
-        <form onSubmit={handleSubmit}>
-          <span>
-            <label>Email</label>
-            <input type="email" ref={emailRef} required />
-          </span>
-          {/* button is disabled when loading */}
-          <button type="submit" disabled={loading}>
-            Reset Password
-          </button>
-        </form>
-        <Link to="/login">Go Back to Login</Link>
-      </div>
-    </div>
+            <Form onSubmit={handleSubmit}>
+              <Form.Field>
+                <label>Email</label>
+                <input type="email" ref={emailRef} required />
+              </Form.Field>
+              {/* button is disabled when loading */}
+              <Button type="submit" disabled={loading}>
+                Reset Password
+              </Button>
+            </Form>
+
+            <Divider inverted />
+
+            <Link to="/login">Go Back to Login</Link>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Container>
   );
 };
 

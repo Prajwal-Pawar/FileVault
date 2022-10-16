@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Notifications from '../Notifications';
 import { useAuth } from '../../providers/AuthProvider';
+// semantic ui imports
+import { Button, Container, Grid, Message, Divider } from 'semantic-ui-react';
 
 const Profile = () => {
   // hooks
@@ -23,12 +24,19 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      {error && <Notifications message={error} type="error" />}
-      <h1>Email : {currentUser.email}</h1>
-      <Link to="/update-profile">Update Profile</Link>
-      <button onClick={handleLogout}>Log Out</button>
-    </div>
+    <Container>
+      <Grid>
+        <Grid.Row centered>
+          <Grid.Column width={6}>
+            {error && <Message error header="Log OutError" content={error} />}
+            <h1>Email : {currentUser.email}</h1>
+            <Link to="/update-profile">Update Profile</Link>
+            <Divider inverted />
+            <Button onClick={handleLogout}>Log Out</Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Container>
   );
 };
 

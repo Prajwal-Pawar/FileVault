@@ -12,7 +12,7 @@
 ---
 
 - libs
-  1. react-hot-toast: for notifications
+  1. semantic-ui-react : for UI
 
 ---
 

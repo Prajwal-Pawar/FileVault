@@ -1,7 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
-import Notifications from '../Notifications';
+// semantic ui imports
+import {
+  Form,
+  Button,
+  Container,
+  Grid,
+  Message,
+  Divider,
+} from 'semantic-ui-react';
 
 const Login = () => {
   // hooks
@@ -32,33 +40,40 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Login</h1>
-        {/* when error, display error notification */}
-        {error && <Notifications message={error} type="error" />}
+    <Container>
+      <Grid>
+        <Grid.Row centered>
+          <Grid.Column width={6}>
+            <h1>Login</h1>
+            {/* when error, display error notification */}
+            {error && <Message error header="Login Error" content={error} />}
 
-        <form onSubmit={handleSubmit}>
-          <span>
-            <label>Email</label>
-            <input type="email" ref={emailRef} required />
-          </span>
-          <span>
-            <label>Password</label>
-            <input type="password" ref={passwordRef} required />
-          </span>
-          {/* button is disabled when loading */}
-          <button type="submit" disabled={loading}>
-            Login
-          </button>
-        </form>
+            <Form onSubmit={handleSubmit}>
+              <Form.Field>
+                <label>Email</label>
+                <input type="email" ref={emailRef} required />
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input type="password" ref={passwordRef} required />
+              </Form.Field>
+              {/* button is disabled when loading */}
+              <Button type="submit" disabled={loading}>
+                Login
+              </Button>
+            </Form>
 
-        <Link to="/forgot-password">Forgot Password ?</Link>
-      </div>
-      <div>
-        Dont Have an Account? <Link to="/signup">Sign Up</Link>
-      </div>
-    </div>
+            {/* <Divider inverted /> */}
+            <Divider horizontal> OR </Divider>
+
+            <Link to="/forgot-password">Forgot Password ?</Link>
+            <div>
+              Dont Have an Account? <Link to="/signup">Sign Up</Link>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Container>
   );
 };
 

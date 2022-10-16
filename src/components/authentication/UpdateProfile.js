@@ -1,7 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
-import Notifications from '../Notifications';
+// semantic ui imports
+import {
+  Form,
+  Button,
+  Container,
+  Grid,
+  Message,
+  Divider,
+} from 'semantic-ui-react';
 
 const UpdateProfile = () => {
   // hooks
@@ -53,48 +61,53 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Update Profile</h1>
-        {/* when error, display error notification */}
-        {error && <Notifications message={error} type="error" />}
+    <Container>
+      <Grid>
+        <Grid.Row centered>
+          <Grid.Column width={6}>
+            <h1>Update Profile</h1>
+            {/* when error, display error notification */}
+            {error && <Message error header="Update Error" content={error} />}
 
-        <form onSubmit={handleSubmit}>
-          <span>
-            <label>Email</label>
-            <input
-              type="email"
-              ref={emailRef}
-              defaultValue={currentUser.email}
-              required
-            />
-          </span>
-          <span>
-            <label>Password</label>
-            <input
-              type="password"
-              ref={passwordRef}
-              placeholder="Leave blank to keep the same passwords"
-            />
-          </span>
-          <span>
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              ref={passwordConfirmRef}
-              placeholder="Leave blank to keep the same passwords"
-            />
-          </span>
-          {/* button is disabled when loading */}
-          <button type="submit" disabled={loading}>
-            Update Profile
-          </button>
-        </form>
-      </div>
-      <div>
-        <Link to="/">Cancel</Link>
-      </div>
-    </div>
+            <Form onSubmit={handleSubmit}>
+              <Form.Field>
+                <label>Email</label>
+                <input
+                  type="email"
+                  ref={emailRef}
+                  defaultValue={currentUser.email}
+                  required
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input
+                  type="password"
+                  ref={passwordRef}
+                  placeholder="Leave blank to keep the same passwords"
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  ref={passwordConfirmRef}
+                  placeholder="Leave blank to keep the same passwords"
+                />
+              </Form.Field>
+              {/* button is disabled when loading */}
+              <Button type="submit" disabled={loading}>
+                Update Profile
+              </Button>
+            </Form>
+            <Divider inverted />
+            <div>
+              <Link to="/">Cancel</Link>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Container>
   );
 };
 
