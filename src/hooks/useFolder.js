@@ -1,13 +1,15 @@
 import { useEffect, useReducer } from 'react';
 import { database } from '../configs/firebase';
+import { useAuth } from '../providers/AuthProvider';
 
 const ACTIONS = {
   SELECT_FOLDER: 'select-folder',
   UPDATE_FOLDER: 'update-folder',
+  SET_CHILD_FOLDERS: 'set-child-folders',
 };
 
 // root folder
-const ROOT_FOLDER = {
+export const ROOT_FOLDER = {
   name: 'Root',
   id: null,
   path: [],
@@ -28,6 +30,11 @@ const reducer = (state, { type, payload }) => {
         ...state,
         folder: payload.folder,
       };
+    case ACTIONS.SET_CHILD_FOLDERS:
+      return {
+        ...state,
+        childFolders: payload.childFolders,
+      };
     default:
       return state;
   }
@@ -41,6 +48,9 @@ export const useFolder = (folderId = null, folder = null) => {
     childFolders: [],
     childFiles: [],
   });
+
+  // get currentUser from useAuth
+  const { currentUser } = useAuth();
 
   // whenever our folder id or folder changes, reset all to default state
   useEffect(() => {
@@ -73,6 +83,20 @@ export const useFolder = (folderId = null, folder = null) => {
         });
       });
   }, [folderId]);
+
+  // populating child folders
+  useEffect(() => {
+    return database.folders
+      .where('parentId', '==', folderId)
+      .where('userId', '==', currentUser.uid)
+      .orderBy('createdAt')
+      .onSnapshot((snapshot) => {
+        dispatch({
+          type: ACTIONS.SET_CHILD_FOLDERS,
+          payload: { childFolders: snapshot.docs.map(database.formatDoc) },
+        });
+      });
+  }, [folderId, currentUser]);
 
   return state;
 };

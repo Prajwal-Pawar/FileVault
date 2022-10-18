@@ -25,6 +25,15 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route
+              exact
+              path="/folder/:folderId"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
             {/* user routes */}
             {/* private route */}
             <Route

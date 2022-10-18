@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Form, Icon, Modal, Header } from 'semantic-ui-react';
 import { database } from '../configs/firebase';
 import { useAuth } from '../providers/AuthProvider';
+import { ROOT_FOLDER } from '../hooks/useFolder';
 
 const AddFolder = ({ currentFolder }) => {
   // hooks
@@ -30,12 +31,20 @@ const AddFolder = ({ currentFolder }) => {
       return;
     }
 
+    // for breadcrumbs
+    const path = [...currentFolder.path];
+
+    if (currentFolder !== ROOT_FOLDER) {
+      // add folder to path
+      path.push({ name: currentFolder.name, id: currentFolder.id });
+    }
+
     //  create folder in firebase
     database.folders.add({
       name: name,
       userId: currentUser.uid,
       parentId: currentFolder.id,
-      // path,
+      path: path,
       createdAt: database.getCurrentTimestamp,
     });
 
