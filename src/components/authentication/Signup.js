@@ -68,7 +68,13 @@ const Signup = () => {
                 <input type="password" ref={passwordConfirmRef} required />
               </Form.Field>
               {/* button is disabled when loading */}
-              <Button primary type="submit" disabled={loading} animated>
+              <Button
+                primary
+                type="submit"
+                loading={loading}
+                disabled={loading}
+                animated
+              >
                 <Button.Content visible>Sign Up</Button.Content>
                 <Button.Content hidden>
                   <Icon name="arrow right" />
